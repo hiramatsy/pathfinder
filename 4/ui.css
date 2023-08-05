@@ -14,6 +14,10 @@ span.cell-used {
     background-color: wheat;
 }
 
+span.cell-nonsteppable {
+    background-color: gray;
+}
+
 div.row {
     display: flex;
     width: fit-content;

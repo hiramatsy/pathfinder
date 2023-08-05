@@ -1,4 +1,4 @@
-const renderGrid = (w, h, parentEl, path) => {
+const renderGrid = (w, h, parentEl, path, nonsteppables) => {
     const grid = document.createElement('div');
     grid.classList.add('grid');
     const gridCellElements = [];
@@ -20,5 +20,9 @@ const renderGrid = (w, h, parentEl, path) => {
     for (const [i, { x, y }] of path.entries()) {
         gridCellElements[y][x].classList.replace('cell-unused', 'cell-used');
         gridCellElements[y][x].innerText = i;
+    }
+
+    for (const { x, y } of nonsteppables) {
+        gridCellElements[y][x].classList.replace('cell-unused', 'cell-nonsteppable');
     }
 };
