@@ -17,7 +17,8 @@ const renderGrid = (w, h, parentEl, path) => {
     }
     parentEl.appendChild(grid);
 
-    for (const { x, y } of path) {
+    for (const [i, { x, y }] of path.entries()) {
         gridCellElements[y][x].classList.replace('cell-unused', 'cell-used');
+        gridCellElements[y][x].innerText = i;
     }
 };
