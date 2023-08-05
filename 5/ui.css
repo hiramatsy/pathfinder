@@ -8,6 +8,7 @@ span.cell {
 
 span.cell-unused {
     background-color: whitesmoke;
+    border-color: lightgray;
 }
 
 span.cell-used {
@@ -16,6 +17,30 @@ span.cell-used {
 
 span.cell-nonsteppable {
     background-color: gray;
+}
+
+span.cell-start {
+    font-weight: bold;
+}
+
+span.cell-goal {
+    font-weight: bold;
+}
+
+span.cell-right-open {
+    border-right-color: wheat;
+}
+
+span.cell-left-open {
+    border-left-color: wheat;
+}
+
+span.cell-top-open {
+    border-top-color: wheat;
+}
+
+span.cell-bottom-open {
+    border-bottom-color: wheat;
 }
 
 div.row {
@@ -38,4 +63,9 @@ div.grid {
     border-width: 2px;
     border-color: lightgreen;
     */
+}
+
+body {
+    display: flex;
+    flex-wrap: wrap;
 }

@@ -1,4 +1,4 @@
-const renderGrid = (w, h, parentEl, path, nonsteppables) => {
+const renderGrid = (w, h, parentEl, path, nonsteppables, start, goal) => {
     const grid = document.createElement('div');
     grid.classList.add('grid');
     const gridCellElements = [];
@@ -22,7 +22,32 @@ const renderGrid = (w, h, parentEl, path, nonsteppables) => {
         gridCellElements[y][x].innerText = i;
     }
 
+    for (let pidx = 0; pidx < path.length - 1; pidx++) {
+        const p0 = path[pidx];
+        const p1 = path[pidx + 1];
+        if (p0.x === p1.x) {
+            if (p0.y < p1.y) { // [0, 1]
+                gridCellElements[p0.y][p0.x].classList.add('cell-bottom-open');
+                gridCellElements[p1.y][p1.x].classList.add('cell-top-open');
+            } else { // [0, -1]
+                gridCellElements[p0.y][p0.x].classList.add('cell-top-open');
+                gridCellElements[p1.y][p1.x].classList.add('cell-bottom-open');
+            }
+        } else { // p0.y === p1.y
+            if (p0.x < p1.x) { // [1, 0]
+                gridCellElements[p0.y][p0.x].classList.add('cell-right-open');
+                gridCellElements[p1.y][p1.x].classList.add('cell-left-open');
+            } else { // [-1, 0]
+                gridCellElements[p0.y][p0.x].classList.add('cell-left-open');
+                gridCellElements[p1.y][p1.x].classList.add('cell-right-open');
+            }
+        }
+    }
+
     for (const { x, y } of nonsteppables) {
         gridCellElements[y][x].classList.replace('cell-unused', 'cell-nonsteppable');
     }
+
+    gridCellElements[start.y][start.x].classList.add('cell-start');
+    gridCellElements[goal.y][goal.x].classList.add('cell-goal');
 };
