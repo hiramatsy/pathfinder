@@ -6,6 +6,14 @@ span.cell {
     width: 1.5em;
 }
 
+span.cell-unused {
+    background-color: whitesmoke;
+}
+
+span.cell-used {
+    background-color: wheat;
+}
+
 div.row {
     display: flex;
     width: fit-content;
