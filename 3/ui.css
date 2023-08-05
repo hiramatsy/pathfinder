@@ -1,0 +1,36 @@
+span.cell {
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 1px;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+span.cell-unused {
+    background-color: whitesmoke;
+}
+
+span.cell-used {
+    background-color: wheat;
+}
+
+div.row {
+    display: flex;
+    width: fit-content;
+    /* DEBUG
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: red;
+    */
+}
+
+div.grid {
+    width: fit-content;
+    /* DEBUG
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: lightgreen;
+    */
+}
