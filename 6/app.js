@@ -1,4 +1,6 @@
 window.addEventListener('load', () => {
+    const uiEls = initializeUi();
+
     const w = 7;
     const h = 7;
     const start = { x: 0, y: 0 };
@@ -16,6 +18,6 @@ window.addEventListener('load', () => {
     ];
     const result_paths = findPaths(w, h, start, goal, nonsteppables);
     for (const path of result_paths) {
-        renderGrid(w, h, document.body, path, nonsteppables, start, goal);
+        renderGrid(w, h, uiEls.gridsContainer, path, nonsteppables, start, goal);
     }
 });
