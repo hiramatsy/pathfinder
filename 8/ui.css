@@ -1,0 +1,75 @@
+span.cell {
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 1px;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+span.cell-unused {
+    background-color: whitesmoke;
+    border-color: lightgray;
+}
+
+span.cell-used {
+    background-color: wheat;
+}
+
+span.cell-nonsteppable {
+    background-color: gray;
+}
+
+span.cell-start {
+    font-weight: bold;
+}
+
+span.cell-goal {
+    font-weight: bold;
+}
+
+span.cell-right-open {
+    border-right-color: wheat;
+}
+
+span.cell-left-open {
+    border-left-color: wheat;
+}
+
+span.cell-top-open {
+    border-top-color: wheat;
+}
+
+span.cell-bottom-open {
+    border-bottom-color: wheat;
+}
+
+div.row {
+    display: flex;
+    width: fit-content;
+    /* DEBUG
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: red;
+    */
+}
+
+div.grid {
+    width: fit-content;
+    margin: 0.5em;
+    /* DEBUG
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: lightgreen;
+    */
+}
+
+div.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+input:invalid {
+    background-color: lightcoral;
+}
