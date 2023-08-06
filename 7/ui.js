@@ -192,6 +192,28 @@ const renderUserInterface = (parentEl, gridEl) => {
     buttonFindPaths.innerText = 'FindPaths';
     buttonFindPaths.disabled = true;
 
+    // Sample game selection
+    const labelSelectSampleGame = document.createElement('label');
+    labelSelectSampleGame.htmlFor = "select-sample-game";
+    labelSelectSampleGame.innerText = 'Sample game selection:';
+
+    const selectSampleGame = document.createElement('select');
+    selectSampleGame.id = "select-sample-game";
+    selectSampleGame.addEventListener('change', (event) => {
+        const selectedValue = JSON.parse(event.target.options[event.target.selectedIndex].value);
+        if (selectedValue) {
+            const { w, h, nonsteppables, start, goal } = selectedValue;
+            inputGridSize.value = `${w},${h}`;
+            inputStart.value = `${start.x},${start.y}`;
+            inputGoal.value = `${goal.x},${goal.y}`;
+            inputNonsteppables.value = nonsteppables.map(({ x, y }) => `${x},${y}`).join(" ");
+        }
+    });
+    const defaultOption = document.createElement('option');
+    defaultOption.innerText = "default";
+    defaultOption.value = "null";
+    selectSampleGame.add(defaultOption);
+
     buttonValidateInput.addEventListener('click', () => {
         if (inputGridSize.validity.valid &&
             inputStart.validity.valid &&
@@ -251,7 +273,17 @@ const renderUserInterface = (parentEl, gridEl) => {
     parentEl.appendChild(inputGoal);
     parentEl.appendChild(labelNonsteppables);
     parentEl.appendChild(inputNonsteppables);
+    parentEl.appendChild(labelSelectSampleGame);
+    parentEl.appendChild(selectSampleGame);
     parentEl.appendChild(messageArea);
+
+    return {
+        inputGridSize,
+        inputStart,
+        inputGoal,
+        inputNonsteppables,
+        selectSampleGame,
+    };
 };
 
 const initializeUi = () => {
@@ -261,10 +293,22 @@ const initializeUi = () => {
     document.body.appendChild(uiEl);
     document.body.appendChild(gridsContainerEl);
 
-    renderUserInterface(uiEl, gridsContainerEl);
+    const inputs = renderUserInterface(uiEl, gridsContainerEl);
 
     return {
         ui: uiEl,
         gridsContainer: gridsContainerEl,
+        registerSampleGameInput: (title, w, h, nonsteppables, start, goal) => {
+            const optionSampleGame = document.createElement('option');
+            optionSampleGame.innerText = title;
+            optionSampleGame.value = JSON.stringify({
+                title,
+                w, h,
+                nonsteppables,
+                start,
+                goal,
+            });
+            inputs.selectSampleGame.add(optionSampleGame);
+        },
     };
 }

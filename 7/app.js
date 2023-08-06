@@ -16,6 +16,7 @@ window.addEventListener('load', () => {
         { x: 5, y: 3 },
         { x: 5, y: 5 },
     ];
+    uiEls.registerSampleGameInput("Sample1", w, h, nonsteppables, start, goal);
     const result_paths = findPaths(w, h, start, goal, nonsteppables);
     for (const path of result_paths) {
         renderGrid(w, h, uiEls.gridsContainer, path, nonsteppables, start, goal);
