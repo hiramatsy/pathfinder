@@ -1,24 +1,23 @@
 window.addEventListener('load', () => {
     const uiEls = initializeUi();
 
-    const w = 7;
-    const h = 7;
-    const start = { x: 0, y: 0 };
-    const goal = { x: 1, y: 2 };
-    const nonsteppables = [
-        { x: 1, y: 1 },
-        { x: 1, y: 3 },
-        { x: 1, y: 5 },
-        { x: 3, y: 1 },
-        { x: 3, y: 3 },
-        { x: 3, y: 5 },
-        { x: 5, y: 1 },
-        { x: 5, y: 3 },
-        { x: 5, y: 5 },
-    ];
-    uiEls.registerSampleGameInput("Sample1", w, h, nonsteppables, start, goal);
-    const result_paths = findPaths(w, h, start, goal, nonsteppables);
-    for (const path of result_paths) {
-        renderGrid(w, h, uiEls.gridsContainer, path, nonsteppables, start, goal);
-    }
+
+
+    uiEls.registerSampleGameInput("Sample1", 3, 3, [], { x: 0, y: 0 }, { x: 1, y: 2 });
+    uiEls.registerSampleGameInput("Sample2", 3, 3, [{ x: 1, y: 1 }], { x: 0, y: 0 }, { x: 1, y: 2 });
+    uiEls.registerSampleGameInput("Sample3", 3, 3, [{ x: 1, y: 1 }, { x: 2, y: 1 }], { x: 0, y: 0 }, { x: 1, y: 2 });
+    uiEls.registerSampleGameInput("Sample4",
+        7, 7,
+        [
+            { x: 1, y: 1 },
+            { x: 1, y: 3 },
+            { x: 1, y: 5 },
+            { x: 3, y: 1 },
+            { x: 3, y: 3 },
+            { x: 3, y: 5 },
+            { x: 5, y: 1 },
+            { x: 5, y: 3 },
+            { x: 5, y: 5 }
+        ],
+        { x: 0, y: 0 }, { x: 1, y: 2 });
 });
