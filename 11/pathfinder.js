@@ -34,7 +34,7 @@ const step_r = (w, h, currentpos, goal, gridStatus, path, result_paths) => {
     }
 }
 
-const step_itr = (w, h, start, goal, gridStatus, path, result_paths) => {
+function* findUsingDfsGenerator(w, h, start, goal, gridStatus, path) {
     const dirs = [];
     const diffs = [[1, 0], [0, 1], [-1, 0], [0, -1]];
     const currPos = structuredClone(start);
@@ -91,7 +91,7 @@ const step_itr = (w, h, start, goal, gridStatus, path, result_paths) => {
             // reach the goal
             const okpath = path.slice();
             okpath.push(goal);
-            result_paths.push(okpath);
+            yield okpath;
             if (!nextDir()) {
                 return;
             }
@@ -109,7 +109,18 @@ const step_itr = (w, h, start, goal, gridStatus, path, result_paths) => {
     }
 }
 
-const findUsingBFS = (w, h, start, goal, gridStatus, path, result_paths) => {
+const step_itr = (w, h, start, goal, gridStatus, path, result_paths) => {
+    const gen = findUsingDfsGenerator(w, h, start, goal, gridStatus, path);
+    for (;;) {
+        const { value, done } = gen.next();
+        if (done) {
+            return;
+        }
+        result_paths.push(value);
+    }
+};
+
+function* findUsingBfsGenerator(w, h, start, goal, gridStatus, path) {
     const diffs = [[1, 0], [0, 1], [-1, 0], [0, -1]];
     const ctxQueue = [[start, gridStatus, path]];
 
@@ -136,7 +147,7 @@ const findUsingBFS = (w, h, start, goal, gridStatus, path, result_paths) => {
                 // reach the goal
                 const okpath = cPath.slice();
                 okpath.push(goal);
-                result_paths.push(okpath);
+                yield okpath;
                 continue;
             }
 
@@ -147,6 +158,17 @@ const findUsingBFS = (w, h, start, goal, gridStatus, path, result_paths) => {
             nPath.push(nPos);
             ctxQueue.push([nPos, nGrid, nPath]);
         }
+    }
+}
+
+const findUsingBFS = (w, h, start, goal, gridStatus, path, result_paths) => {
+    const gen = findUsingBfsGenerator(w, h, start, goal, gridStatus, path);
+    for (;;) {
+        const { value, done } = gen.next();
+        if (done) {
+            return;
+        }
+        result_paths.push(value);
     }
 };
 
@@ -184,5 +206,5 @@ if (!exports) {
 }
 exports.DFS_RECURSIVE = DFS_RECURSIVE;
 exports.DFS_ITERATIVE = DFS_ITERATIVE;
-exports.BFS = BFS;
+exports.BFS = DFS_ITERATIVE;
 exports.findPaths = findPaths;
