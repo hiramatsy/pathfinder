@@ -193,6 +193,24 @@ const renderUserInterface = (parentEl, gridEl) => {
     buttonFindPaths.disabled = true;
 
     // Sample game selection
+    const labelSelectSearchVariant = document.createElement('label');
+    labelSelectSearchVariant.htmlFor = "select-search-variant";
+    labelSelectSearchVariant.innerText = 'choose a search variant:';
+
+    const selectSearchVariant = document.createElement('select');
+    selectSearchVariant.id = "select-search-variant";
+    const SEARCH_VARIANTS = [
+        [DFS_RECURSIVE, "DFS_RECURSIVE"],
+        [DFS_ITERATIVE, "DFS_ITERATIVE"],
+    ];
+    for (const [sid, svar] of SEARCH_VARIANTS) {
+        const sopEl = document.createElement('option');
+        sopEl.value = String(sid);
+        sopEl.innerText = svar;
+        selectSearchVariant.add(sopEl);
+    }
+
+    // Sample game selection
     const labelSelectSampleGame = document.createElement('label');
     labelSelectSampleGame.htmlFor = "select-sample-game";
     labelSelectSampleGame.innerText = 'Sample game selection:';
@@ -239,7 +257,7 @@ const renderUserInterface = (parentEl, gridEl) => {
 
                 const findPathHandler = () => {
                     clearGrid(document.body);
-                    const result_paths = findPaths(gameInput.w, gameInput.h, gameInput.start, gameInput.goal, gameInput.nonsteppables);
+                    const result_paths = findPaths(gameInput.w, gameInput.h, gameInput.start, gameInput.goal, gameInput.nonsteppables, Number(selectSearchVariant.value));
                     for (const path of result_paths) {
                         renderGrid(gameInput.w, gameInput.h, gridEl, path, gameInput.nonsteppables, gameInput.start, gameInput.goal);
                     }
@@ -273,6 +291,8 @@ const renderUserInterface = (parentEl, gridEl) => {
     parentEl.appendChild(inputGoal);
     parentEl.appendChild(labelNonsteppables);
     parentEl.appendChild(inputNonsteppables);
+    parentEl.appendChild(labelSelectSearchVariant);
+    parentEl.appendChild(selectSearchVariant);
     parentEl.appendChild(labelSelectSampleGame);
     parentEl.appendChild(selectSampleGame);
     parentEl.appendChild(messageArea);
