@@ -1,6 +1,7 @@
 const findPaths = require('./pathfinder').findPaths;
 const DFS_RECURSIVE = require('./pathfinder').DFS_RECURSIVE;
 const DFS_ITERATIVE = require('./pathfinder').DFS_ITERATIVE;
+const BFS = require('./pathfinder').BFS;
 
 const testCases = [
     {
@@ -56,6 +57,19 @@ const testCases = [
             const goal = { x: 1, y: 2 };
             const nonsteppables = [];
             const result_paths = findPaths(w, h, start, goal, nonsteppables, DFS_ITERATIVE);
+            console.log(result_paths);
+            console.log(result_paths.length);
+        }
+    },
+    {
+        name: "test5",
+        test: () => {
+            const w = 3;
+            const h = 3;
+            const start = { x: 0, y: 0 };
+            const goal = { x: 1, y: 2 };
+            const nonsteppables = [];
+            const result_paths = findPaths(w, h, start, goal, nonsteppables, BFS);
             console.log(result_paths);
             console.log(result_paths.length);
         }

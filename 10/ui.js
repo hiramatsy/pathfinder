@@ -202,6 +202,7 @@ const renderUserInterface = (parentEl, gridEl) => {
     const SEARCH_VARIANTS = [
         [DFS_RECURSIVE, "DFS_RECURSIVE"],
         [DFS_ITERATIVE, "DFS_ITERATIVE"],
+        [BFS, "BFS"],
     ];
     for (const [sid, svar] of SEARCH_VARIANTS) {
         const sopEl = document.createElement('option');
