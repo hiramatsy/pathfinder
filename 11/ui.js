@@ -61,7 +61,6 @@ const validateInput = (ivWh, ivStart, ivGoal, ivNonsteppables) => {
     const [sX, sY] = ivStart.split(',').map(Number);
     const [gX, gY] = ivGoal.split(',').map(Number);
     const nonsteppables = ivNonsteppables.length === 0 ? [] : ivNonsteppables.split(' ').map((xy) => { const [x, y] = xy.split(',').map(Number); return { x, y }; });
-    console.log(w, h, sX, sY, gX, gY, nonsteppables);
 
     if (w <= 0 || h <= 0) {
         return {
