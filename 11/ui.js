@@ -258,12 +258,66 @@ const renderUserInterface = (parentEl, gridEl) => {
 
                 const findPathHandler = () => {
                     clearGrid(document.body);
-                    const result_paths = findPaths(gameInput.w, gameInput.h, gameInput.start, gameInput.goal, gameInput.nonsteppables, Number(selectSearchVariant.value));
-                    for (const path of result_paths) {
-                        renderGrid(gameInput.w, gameInput.h, gridEl, path, gameInput.nonsteppables, gameInput.start, gameInput.goal);
+                    switch (Number(selectSearchVariant.value)) {
+                        case DFS_RECURSIVE:
+                            {
+                                const result_paths = findPaths(gameInput.w, gameInput.h, gameInput.start, gameInput.goal, gameInput.nonsteppables, Number(selectSearchVariant.value));
+                                for (const path of result_paths) {
+                                    renderGrid(gameInput.w, gameInput.h, gridEl, path, gameInput.nonsteppables, gameInput.start, gameInput.goal);
+                                }
+                                buttonFindPaths.removeEventListener('click', findPathHandler);
+                                buttonFindPaths.disabled = true;
+                            }
+                            break;
+
+                        case DFS_ITERATIVE:
+                            {
+                                const gridStates = Array(gameInput.h).fill().map(() => Array(gameInput.w).fill(CELL_UNUSED));
+                                for (const { x, y } of gameInput.nonsteppables) {
+                                    gridStates[y][x] = CELL_NONSTEPPABLE;
+                                }
+                                gridStates[gameInput.start.y][gameInput.start.x] = CELL_USED;
+                                const gen = findUsingDfsGenerator(gameInput.w, gameInput.h, gameInput.start, gameInput.goal, gridStates, [gameInput.start]);
+                                const update = () => {
+                                    const { value, done } = gen.next();
+                                    if (done) {
+                                        buttonFindPaths.removeEventListener('click', findPathHandler);
+                                        buttonFindPaths.disabled = true;
+                                    } else {
+                                        renderGrid(gameInput.w, gameInput.h, gridEl, value, gameInput.nonsteppables, gameInput.start, gameInput.goal);
+                                        queueMicrotask(update);
+                                    }
+                                }
+                                update();
+                            }
+                            break;
+
+                        case BFS:
+                            {
+                                const gridStates = Array(gameInput.h).fill().map(() => Array(gameInput.w).fill(CELL_UNUSED));
+                                for (const { x, y } of gameInput.nonsteppables) {
+                                    gridStates[y][x] = CELL_NONSTEPPABLE;
+                                }
+                                gridStates[gameInput.start.y][gameInput.start.x] = CELL_USED;
+                                const gen = findUsingBfsGenerator(gameInput.w, gameInput.h, gameInput.start, gameInput.goal, gridStates, [gameInput.start]);
+                                const update = () => {
+                                    const { value, done } = gen.next();
+                                    if (done) {
+                                        buttonFindPaths.removeEventListener('click', findPathHandler);
+                                        buttonFindPaths.disabled = true;
+                                    } else {
+                                        renderGrid(gameInput.w, gameInput.h, gridEl, value, gameInput.nonsteppables, gameInput.start, gameInput.goal);
+                                        queueMicrotask(update);
+                                    }
+                                }
+                                update();
+                            }
+                            break;
+
+                        default:
+                            buttonFindPaths.removeEventListener('click', findPathHandler);
+                            buttonFindPaths.disabled = true;
                     }
-                    buttonFindPaths.removeEventListener('click', findPathHandler);
-                    buttonFindPaths.disabled = true;
                 }
                 buttonFindPaths.addEventListener('click', findPathHandler);
                 buttonFindPaths.disabled = false;
